@@ -12,6 +12,7 @@ from .models import Movie
 from .forms import MovieForm
 from werkzeug.utils import secure_filename
 from . import db
+from flask_wtf.csrf import generate_csrf
 
 
 ###
@@ -50,6 +51,11 @@ def movies():
         }), 201
 
     return jsonify({"errors": form_errors(form)}), 400
+
+
+@app.route('/api/v1/csrf-token', methods=['GET'])
+def get_csrf():
+    return jsonify({'csrf_token': generate_csrf()})
 
 
 ###
